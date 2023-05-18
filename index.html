@@ -44,8 +44,9 @@
     var foundCount = 0;
     var startTime;
     var endTime;
+    var foundPokemon = [];
 
-    // Function to check if the entered Pokemon name exists
+    // Function to check if the entered Pokemon name exists and has not been found before
     function checkPokemon(event) {
       event.preventDefault(); // Prevent form submission
 
@@ -54,50 +55,43 @@
 
       if (pokemonData.hasOwnProperty(pokemonName)) {
         var pokemonInfo = pokemonData[pokemonName];
-        var listItem = document.createElement("li");
-        listItem.innerHTML = pokemonName + " - " + pokemonInfo[1] + " type";
-        pokemonList.appendChild(listItem);
-        pokemonNameInput.value = ""; // Clear the input field
-        foundCount++;
-        counter.textContent = foundCount + "/" + Object.keys(pokemonData).length;
+        
+        if (foundPokemon.includes(pokemonName)) {
+          alert("Pokemon already found!");
+        } else {
+          var listItem = document.createElement("li");
+          listItem.innerHTML = pokemonName + " - " + pokemonInfo[1] + " type";
+          pokemonList.appendChild(listItem);
+          pokemonNameInput.value = ""; // Clear the input field
+          foundPokemon.push(pokemonName);
+          foundCount++;
+          counter.textContent = foundCount + "/" + Object.keys(pokemonData).length;
 
-        // Start the stopwatch when the counter reaches 1
-        if (foundCount === 1) {
-          startTime = new Date();
-          stopwatch.textContent = "Stopwatch: Running";
-        }
+          // Start the stopwatch when the counter reaches the total number of Pokemon
+          if (foundCount === Object.keys(pokemonData).length) {
+            endTime = new Date();
+            var timeDiff = endTime - startTime; // Time difference in milliseconds
+            var seconds = Math.floor(timeDiff / 1000);
+            var minutes = Math.floor(seconds / 60);
+            seconds %= 60;
 
-        // End the stopwatch when the counter reaches 1160
-        if (foundCount === 1160) {
-          endTime = new Date();
-          var elapsedTime = (endTime - startTime) / 1000;
-          stopwatch.textContent = "Stopwatch: " + elapsedTime + " seconds";
-        }
-      } else {
-        alert("Pokemon not found!");
-      }
-    }
-
-    // Function to show autocomplete suggestions based on the input
-    function showSuggestions(event) {
-      var pokemonNameInput = event.target;
-      var inputValue = pokemonNameInput.value.toLowerCase();
-      var suggestions = [];
-
-      if (inputValue.length > 0) {
-        for (var pokemonName in pokemonData) {
-          if (pokemonName.toLowerCase().startsWith(inputValue)) {
-            suggestions.push(pokemonName);
+            stopwatch.textContent = "Time taken: " + minutes + " minutes " + seconds + " seconds";
           }
         }
+      } else {
+        alert("Invalid Pokemon name!");
       }
-
-      updateSuggestions(suggestions);
     }
 
-    // Function to update the suggestions list
-    function updateSuggestions(suggestions) {
+    // Function to show suggestions based on the entered letters
+    function showSuggestions(event) {
+      var input = event.target.value.toLowerCase();
+      var suggestions = Object.keys(pokemonData).filter(function(pokemon) {
+        return pokemon.toLowerCase().startsWith(input);
+      });
+
       suggestionsList.innerHTML = "";
+
       suggestions.forEach(function(suggestion) {
         var listItem = document.createElement("li");
         listItem.textContent = suggestion;
@@ -108,8 +102,12 @@
         suggestionsList.appendChild(listItem);
       });
     }
+
+    // Initialize the counter and start the stopwatch when the page loads
+    window.onload = function() {
+      counter.textContent = foundCount + "/" + Object.keys(pokemonData).length;
+      startTime = new Date();
+    };
   </script>
 </body>
 </html>
-
-      
