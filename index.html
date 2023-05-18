@@ -5,6 +5,11 @@
 </head>
 <body>
   <h1>Pokemon List</h1>
+  <form onsubmit="checkPokemon(event)">
+    <label for="pokemonName">Enter a Pokemon Name: </label>
+    <input type="text" id="pokemonName" required>
+    <button type="submit">Check</button>
+  </form>
   <ul id="pokemonList"></ul>
 
   <script>
@@ -15,6 +20,24 @@
 
     // Get the list element
     var pokemonList = document.getElementById("pokemonList");
+
+    // Function to check if the entered Pokemon name exists
+    function checkPokemon(event) {
+      event.preventDefault(); // Prevent form submission
+
+      var pokemonNameInput = document.getElementById("pokemonName");
+      var pokemonName = pokemonNameInput.value;
+
+      if (pokemonData.hasOwnProperty(pokemonName)) {
+        var pokemonInfo = pokemonData[pokemonName];
+        var listItem = document.createElement("li");
+        listItem.innerHTML = pokemonName + " - " + pokemonInfo[1] + " type";
+        pokemonList.appendChild(listItem);
+        pokemonNameInput.value = ""; // Clear the input field
+      } else {
+        alert("Pokemon not found!");
+      }
+    }
 
     // Loop through each Pokemon in the data and add it to the list
     for (var pokemon in pokemonData) {
@@ -28,3 +51,5 @@
   </script>
 </body>
 </html>
+
+    
