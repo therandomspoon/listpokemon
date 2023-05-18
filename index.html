@@ -4,12 +4,12 @@
   <title>Pokemon List</title>
 </head>
 <body>
-  <h1>How many Pokemon can list?</h1>
-  <p> please capitalise the name </p>
+  <h1>Pokemon List</h1>
   <form onsubmit="checkPokemon(event)">
     <label for="pokemonName">Enter a Pokemon Name: </label>
-    <input type="text" id="pokemonName" required>
+    <input type="text" id="pokemonName" required oninput="showSuggestions(event)">
     <button type="submit">Check</button>
+    <ul id="suggestions"></ul>
   </form>
   <p id="counter"></p>
   <p id="stopwatch"></p>
@@ -22,10 +22,11 @@
 
     };
 
-    // Get the list element, counter element, and stopwatch element
+    // Get the list element, counter element, stopwatch element, and suggestions element
     var pokemonList = document.getElementById("pokemonList");
     var counter = document.getElementById("counter");
     var stopwatch = document.getElementById("stopwatch");
+    var suggestionsList = document.getElementById("suggestions");
     var foundCount = 0;
     var startTime;
     var endTime;
@@ -62,6 +63,39 @@
         alert("Pokemon not found!");
       }
     }
+
+    // Function to show autocomplete suggestions based on the input
+    function showSuggestions(event) {
+      var pokemonNameInput = event.target;
+      var inputValue = pokemonNameInput.value.toLowerCase();
+      var suggestions = [];
+
+      if (inputValue.length > 0) {
+        for (var pokemonName in pokemonData) {
+          if (pokemonName.toLowerCase().startsWith(inputValue)) {
+            suggestions.push(pokemonName);
+          }
+        }
+      }
+
+      updateSuggestions(suggestions);
+    }
+
+    // Function to update the suggestions list
+    function updateSuggestions(suggestions) {
+      suggestionsList.innerHTML = "";
+      suggestions.forEach(function(suggestion) {
+        var listItem = document.createElement("li");
+        listItem.textContent = suggestion;
+        listItem.addEventListener("click", function() {
+          document.getElementById("pokemonName").value = suggestion;
+          suggestionsList.innerHTML = "";
+        });
+        suggestionsList.appendChild(listItem);
+      });
+    }
   </script>
 </body>
 </html>
+
+      
