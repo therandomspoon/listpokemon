@@ -38,18 +38,6 @@
         alert("Pokemon not found!");
       }
     }
-
-    // Loop through each Pokemon in the data and add it to the list
-    for (var pokemon in pokemonData) {
-      if (pokemonData.hasOwnProperty(pokemon)) {
-        var pokemonInfo = pokemonData[pokemon];
-        var listItem = document.createElement("li");
-        listItem.innerHTML = pokemon + " - " + pokemonInfo[1] + " type";
-        pokemonList.appendChild(listItem);
-      }
-    }
   </script>
 </body>
 </html>
-
-    
