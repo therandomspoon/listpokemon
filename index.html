@@ -66,13 +66,22 @@
     		Mute
     		<input type="checkbox" id="muteCheckbox">
   	</label>
+	<label for="volumeSlider">
+    Volume
+    <input type="range" id="volumeSlider" min="0" max="100" step="1" value="50">
+  </label>
   
   <script>
     var audioPlayer = document.getElementById("audioPlayer");
     var muteCheckbox = document.getElementById("muteCheckbox");
+    var volumeSlider = document.getElementById("volumeSlider");
     
     muteCheckbox.addEventListener("change", function() {
       audioPlayer.muted = muteCheckbox.checked;
+    });
+    
+    volumeSlider.addEventListener("input", function() {
+      audioPlayer.volume = volumeSlider.value;
     });
   </script>
       <button onclick="updateCounter()" style="text-align: center;">Update</button>
