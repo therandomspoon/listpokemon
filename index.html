@@ -60,30 +60,9 @@
       <p> </p>
       <p2 id="cookieValue" style="color: white;"></p2>
       <p> </p>
-      <audio id="audioPlayer" src="music1.mp3"></audio>
-  
-  	<label for="muteCheckbox">
-    		Mute
-    		<input type="checkbox" id="muteCheckbox">
-  	</label>
-	<label for="volumeSlider">
-    		Volume
-    	<input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
-  	</label>
-  
-  <script>
-    var audioPlayer = document.getElementById("audioPlayer");
-    var muteCheckbox = document.getElementById("muteCheckbox");
-    var volumeSlider = document.getElementById("volumeSlider");
-    
-    muteCheckbox.addEventListener("change", function() {
-      audioPlayer.muted = muteCheckbox.checked;
-    });
-    
-    volumeSlider.addEventListener("input", function() {
-      audioPlayer.volume = volumeSlider.value;
-    });
-  </script>
+	<audio controls autoplay loop>
+  		<source src="music1.mp3" type="audio/mpeg">
+	</audio>
       <p> </p>
       <button onclick="updateCounter()" style="text-align: center;">Update</button>
       <p> </p>
