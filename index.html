@@ -66,17 +66,14 @@
     		<source src="music3.mp3" type="audio/mpeg">
 	</audio>
       <script>
-	      var audio = document.getElementById("backgroundMusic");
-    	      var currentSource = 1;
-    	      var sources = audio.getElementsByTagName("source");
+	      function playNextSong() {
+      		currentSource = (currentSource + 1) % sources.length;
+      		audio.src = sources[currentSource].src;
+      		audio.load();
+      		audio.play();
+    		}
 
-              audio.addEventListener("ended", playNextSong);
-
-             function playNextSong() {
-            	 currentSource = (currentSource + 1) % sources.length;
-            	 audio.src = sources[currentSource].src;
-             	 audio.play();
-  	     }
+    		audio.play();
       </script>
       <p> </p>
       <button onclick="updateCounter()" style="text-align: center;">Update</button>
