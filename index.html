@@ -187,28 +187,6 @@
     location.reload();
   }
 
-  function playNextSong() {
-    var audio = document.getElementById("backgroundMusic");
-    var currentSource = audio.src;
-    var sources = audio.getElementsByTagName("source");
-    var nextSource = "";
-
-    for (var i = 0; i < sources.length; i++) {
-      if (sources[i].src !== currentSource) {
-        nextSource = sources[i].src;
-        break;
-      }
-    }
-
-    if (nextSource !== "") {
-      audio.src = nextSource;
-      audio.play();
-    }
-  }
-
-  var audio = document.getElementById("backgroundMusic");
-  audio.addEventListener("ended", playNextSong);
-  audio.play();
 
   function startTimer() {
     startTime = new Date();
